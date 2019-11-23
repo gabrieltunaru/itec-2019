@@ -13,7 +13,7 @@ import {
   _MatMenuDirectivesModule,
   MatCardModule,
   MatFormFieldModule,
-  MatInputModule, MatMenuModule, MatRadioModule, MatSlideToggleModule,
+  MatInputModule, MatMenuModule, MatRadioModule, MatSidenavModule, MatSlideToggleModule,
   MatSnackBarModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -24,6 +24,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { SellerProfileComponent } from './components/seller-profile/seller-profile.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { BrowseComponent } from './pages/browse/browse.component';
+import { CategoryComponent } from './components/category/category.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { SellerProfileComponent } from './components/seller-profile/seller-profi
     ProfileComponent,
     ProfilePageComponent,
     SellerProfileComponent,
+    CategoriesComponent,
+    BrowseComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,8 @@ import { SellerProfileComponent } from './components/seller-profile/seller-profi
     MatMenuModule,
     MatTabsModule,
     MatSlideToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

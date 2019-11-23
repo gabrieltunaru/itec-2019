@@ -23,16 +23,19 @@
           <mat-form-field class="example-full-width">
             <input matInput placeholder="Delivery address" [(ngModel)]="profile.deliveryAddress" name="address2">
           </mat-form-field>
-          <mat-radio-group aria-label="Select an option" fxLayoutAlign="space-evenly"  aria-labelledby="example-radio-group-label" [(ngModel)]="profile.type" name="type">
+          <mat-radio-group aria-label="Select an option" fxLayoutAlign="space-evenly"
+                           aria-labelledby="example-radio-group-label" [(ngModel)]="profile.type" name="type">
             <mat-radio-button value="private">Person</mat-radio-button>
             <mat-radio-button value="company">Company</mat-radio-button>
           </mat-radio-group>
 
         </form>
+      </mat-card-content>
+      <mat-card-footer>
         <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">
           Save
         </button>
-      </mat-card-content>
+      </mat-card-footer>
     </mat-card>
   </div>
 </div>
