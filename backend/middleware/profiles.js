@@ -13,11 +13,35 @@ module.exports = {
     })
   },
 
-  getBuyerProfile: async (req,res) => {
+  getBuyerProfile: async (req, res) => {
     const decoded = generalMid.decoded(req.headers)
     userModel.User.findOne({ _id: decoded._id }).exec((err, result) => {
-        res.send(result.buyerProfile)
-        return
-      })
-  }
+      res.send(result.buyerProfile)
+      return
+    })
+  },
+
+  uploadBuyerPhoto: async (req, res, next) => {
+    const file = req.file
+    if (!file) {
+      const error = new Error('Please upload a file')
+      error.httpStatusCode = 400
+      return next(error)
+    }
+    const decoded = generalMid.decoded(req.headers)
+    console.log(decoded)
+    await userModel.User.update(
+      { _id: decoded._id },
+      { 'buyerProfile.photo': file.filename }
+    )
+    res.send(file)
+  },
+
+  getPhoto: async (req,res) => {
+    //   const decoded = generalMid.decoded(req.headers)
+    //   const user = await userModel.User.findOne({ _id: decoded._id })
+    //     res.send(user)
+    const {filename} = req.params
+    res.send(generalMid.getFile(filename))
+    }
 }

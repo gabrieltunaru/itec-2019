@@ -17,6 +17,9 @@ const BuyerProfileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  photo: {
+    type: String,
+  },
 })
 
 const BuyerProfile = mongoose.model('BuyerProfile', BuyerProfileSchema)
