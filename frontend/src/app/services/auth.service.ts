@@ -17,14 +17,9 @@ export class AuthService {
               private router: Router) {
   }
 
-  public httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
 
   register(user) {
-    this.http.post('/api/user/register', user, this.httpOptions)
+    this.http.post('/api/user/register', user, this.generalService.getHttpOptions())
       .subscribe(res => {
           this.storeToken(res);
           this.isLoggedIn = true;
@@ -56,7 +51,7 @@ export class AuthService {
 
   getCurrentUser() {
     return new Promise((resolve, reject) => {
-      this.http.get('/api/user', this.httpOptions)
+      this.http.get('/api/user', this.generalService.getHttpOptions())
         .subscribe((res) => resolve(res), error => reject(error));
     });
   }

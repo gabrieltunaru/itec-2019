@@ -6,7 +6,6 @@
           <input type="file" (change)="onFileChange($event)" accept="image/*" #file hidden>
           <i class="material-icons" *ngIf="!photo">account_circle</i>
           <img src="{{photo}}" alt="" *ngIf="photo" class="avatar">
-
         </div>
         <mat-card-title>Profile</mat-card-title>
       </mat-card-header>
@@ -22,8 +21,13 @@
             <input matInput placeholder="Billing address" [(ngModel)]="profile.billingAddress" name="address">
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Delivery address" [(ngModel)]="profile.deliveryAddress" name="address">
+            <input matInput placeholder="Delivery address" [(ngModel)]="profile.deliveryAddress" name="address2">
           </mat-form-field>
+          <mat-radio-group aria-label="Select an option" fxLayoutAlign="space-evenly"  aria-labelledby="example-radio-group-label" [(ngModel)]="profile.type" name="type">
+            <mat-radio-button value="private">Person</mat-radio-button>
+            <mat-radio-button value="company">Company</mat-radio-button>
+          </mat-radio-group>
+
         </form>
         <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">
           Login

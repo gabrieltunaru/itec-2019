@@ -13,7 +13,7 @@ import {
   _MatMenuDirectivesModule,
   MatCardModule,
   MatFormFieldModule,
-  MatInputModule, MatMenuModule,
+  MatInputModule, MatMenuModule, MatRadioModule, MatSlideToggleModule,
   MatSnackBarModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -23,6 +23,7 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { SellerProfileComponent } from './components/seller-profile/seller-profile.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     AuthComponent,
     ProfileComponent,
     ProfilePageComponent,
+    SellerProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,9 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     MatSnackBarModule,
     _MatMenuDirectivesModule,
     MatMenuModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSlideToggleModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

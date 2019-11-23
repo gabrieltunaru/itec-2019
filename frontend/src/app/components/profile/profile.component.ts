@@ -12,8 +12,10 @@ export class ProfileComponent implements OnInit {
     name: '',
     phone: '',
     billingAddress: '',
-    deliveryAddress: ''
+    deliveryAddress: '',
+    type: ''
   };
+  public checked;
 
   public photo;
 
@@ -32,6 +34,7 @@ export class ProfileComponent implements OnInit {
 
   onSubmit() {
     this.profileService.setBuyerProfile(this.profile);
+    // console.log(this.profile);
   }
 
   onFileChange(event) {
@@ -44,11 +47,13 @@ export class ProfileComponent implements OnInit {
 
   updatePhoto() {
     this.profileService.getBuyerProfile().then(profile => {
-      const profile2: any = profile;
-      this.profile = profile2;
-      if (profile2.photo) {
-        this.photo = 'http://localhost:3000/api/profile/buyerPhoto/' + profile2.photo;
-        this.cdr.detectChanges();
+      if (profile) {
+        const profile2: any = profile;
+        this.profile = profile2;
+        if (profile2.photo) {
+          this.photo = 'http://localhost:3000/api/profile/buyerPhoto/' + profile2.photo;
+          this.cdr.detectChanges();
+        }
       }
     });
   }

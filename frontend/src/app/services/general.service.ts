@@ -13,7 +13,6 @@ export class GeneralService {
   public getHttpOptions() {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         'x-auth-token': localStorage.getItem('token')
       }),
     };
@@ -21,15 +20,6 @@ export class GeneralService {
   }
 
 
-  public getFileHttpOptions() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        // 'Content-Type': 'multipart/form-data; boundary=--------------------------783825057852513730137859',
-        'x-auth-token': localStorage.getItem('token')
-      }),
-    };
-    return httpOptions;
-  }
 
   resolveError(error) {
     if (error.error) {
