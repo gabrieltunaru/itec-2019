@@ -21,6 +21,8 @@ const UserSchema = new mongoose.Schema({
   },
   isAdmin: Boolean,
   buyerProfile: BuyerProfileSchema,
+  sellerProfile: BuyerProfileSchema,
+  isSeller: Boolean
 })
 
 UserSchema.methods.generateAuthToken = function() {

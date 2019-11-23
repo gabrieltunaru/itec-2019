@@ -26,6 +26,5 @@ const BuyerProfileSchema = new mongoose.Schema({
 })
 
 const BuyerProfile = mongoose.model('BuyerProfile', BuyerProfileSchema)
-
 exports.BuyerProfile = BuyerProfile
 exports.BuyerProfileSchema = BuyerProfileSchema

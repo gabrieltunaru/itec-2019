@@ -3,52 +3,68 @@ const userModel = require('../models/user.model')
 const generalMid = require('./general')
 const fs = require('fs')
 
-module.exports = {
-  setBuyerProfile: async (req, res) => {
-    const profile = new BuyerProfile({ ...req.body })
-    const decoded = generalMid.decoded(req.headers)
-    await userModel.User.update({ _id: decoded._id }, { buyerProfile: profile })
-    userModel.User.findOne({ email: decoded.email }).exec((err, result) => {
-      res.send({ status: `Created profile ${result.buyerProfile}` })
-      return
-    })
-  },
+const setProfile = type => async (req, res) => {
+  const profile = new BuyerProfile({ ...req.body })
+  const decoded = generalMid.decoded(req.headers)
+  const modelName = `${type}Profile`
+  await userModel.User.update({ _id: decoded._id }, { [modelName]: profile })
+  userModel.User.findOne({ email: decoded.email }).exec((err, result) => {
+    res.send({ status: `Created profile ${result[modelName]}` })
+    return
+  })
+}
 
-  getBuyerProfile: async (req, res) => {
-    const decoded = generalMid.decoded(req.headers)
-    userModel.User.findOne({ _id: decoded._id }).exec((err, result) => {
-      res.send(result.buyerProfile)
-      return
-    })
-  },
+const setBuyerProfile = setProfile('buyer')
+const setSellerProfile = setProfile('seller')
 
-  uploadBuyerPhoto: async (req, res, next) => {
-    try {
-      const file = req.file
-      if (!file) {
-        res.status(400).send("Didn't receive a file")
-      }
-      const decoded = generalMid.decoded(req.headers)
-      await userModel.User.update(
-        { _id: decoded._id },
-        { 'buyerProfile.photo': file.filename }
-      )
-      res.send(file)
-    } catch (err) {
-      res.status(400).send(err)
+const getProfile = type => async (req, res) => {
+  const modelName = `${type}Profile`
+  const decoded = generalMid.decoded(req.headers)
+  userModel.User.findOne({ _id: decoded._id }).exec((err, result) => {
+    res.send(result[modelName])
+    return
+  })
+}
+
+const getBuyerProfile = getProfile('buyer')
+const getSellerProfile = getProfile('seller')
+
+const uploadPhoto = type => async (req, res, next) => {
+  try {
+  const modelName = `${type}Profile.photo`
+    const file = req.file
+    if (!file) {
+      res.status(400).send("Didn't receive a file")
     }
-  },
+    const decoded = generalMid.decoded(req.headers)
+    await userModel.User.update(
+      { _id: decoded._id },
+      { [modelName]: file.filename }
+    )
+    res.send(file)
+  } catch (err) {
+    res.status(400).send(err)
+  }
+}
 
-  getPhoto: async (req, res) => {
-    const { filename } = req.params
-    res.send(generalMid.getFile(filename))
-  },
+const uploadBuyerPhoto = uploadPhoto('buyer')
+const uploadSellerPhoto = uploadPhoto('seller')
 
-  getImage: async (req, res) => {
-    const { filename } = req.params
-    fs.readFile(generalMid.getFile(filename), function(err, data) {
-      if (err) throw err
-      res.send(data)
-    })
-  },
+const getImage = async (req, res) => {
+  const { filename } = req.params
+  fs.readFile(generalMid.getFile(filename), function(err, data) {
+    if (err) throw err
+    res.send(data)
+  })
+}
+
+module.exports = {
+  setProfile,
+  getImage,
+  setBuyerProfile,
+  getBuyerProfile,
+  uploadBuyerPhoto,
+  setSellerProfile,
+  getSellerProfile,
+  uploadSellerPhoto
 }

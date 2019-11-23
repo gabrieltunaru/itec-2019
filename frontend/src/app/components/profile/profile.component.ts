@@ -33,20 +33,20 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    this.profileService.setBuyerProfile(this.profile);
-    // console.log(this.profile);
+    this.profileService.setBuyerProfile(this.profile, 'buyer');
+    console.log(this.profile);
   }
 
   onFileChange(event) {
     if (event.target.files && event.target.files.length > 0) {
       const file: File = event.target.files[0];
-      this.profileService.uploadBuyerPhoto(file);
+      this.profileService.uploadBuyerPhoto(file, 'buyer');
       setTimeout(this.updatePhoto, 2000);
     }
   }
 
   updatePhoto() {
-    this.profileService.getBuyerProfile().then(profile => {
+    this.profileService.getBuyerProfile('buyer').then(profile => {
       if (profile) {
         const profile2: any = profile;
         this.profile = profile2;

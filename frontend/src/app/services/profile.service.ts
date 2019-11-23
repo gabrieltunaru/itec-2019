@@ -18,8 +18,8 @@ export class ProfileService {
     authService.getCurrentUser().then(user => this.user = user).catch(err => console.log(err));
   }
 
-  setBuyerProfile(profile) {
-    this.http.post('/api/profile/', profile, this.generalService.getHttpOptions())
+  setBuyerProfile(profile, type) {
+    this.http.post('/api/profile/' + type, profile, this.generalService.getHttpOptions())
       .subscribe(res => {
           console.log('asd');
         },
@@ -29,9 +29,9 @@ export class ProfileService {
         });
   }
 
-  getBuyerProfile() {
+  getBuyerProfile(type) {
     return new Promise((resolve, reject) => {
-      this.http.get('/api/profile', this.generalService.getHttpOptions())
+      this.http.get('/api/profile/' + type, this.generalService.getHttpOptions())
         .subscribe(res => {
           resolve(res);
         }, error => {
@@ -42,11 +42,11 @@ export class ProfileService {
     });
   }
 
-  uploadBuyerPhoto(file) {
+  uploadBuyerPhoto(file, type) {
     const formData = new FormData();
     formData.append('file', file);
     console.log(file, formData);
-    this.http.post('api/profile/buyerPhoto', formData, this.generalService.getHttpOptions())
+    this.http.post('api/profile/' + type + '/photo', formData, this.generalService.getHttpOptions())
       .subscribe(res => {
         console.log(res);
       }, error => {
@@ -54,9 +54,9 @@ export class ProfileService {
       });
   }
 
-  async getBuyerPhoto() {
-    const profile: any = await this.getBuyerProfile();
-    this.http.get('api/profile/buyerPhoto/' + profile.photo, this.generalService.getHttpOptions()).subscribe(res => {
+  async getBuyerPhoto(type) {
+    const profile: any = await this.getBuyerProfile(type);
+    this.http.get('api/profile/' + type + '/photo/' + profile.photo, this.generalService.getHttpOptions()).subscribe(res => {
       return res;
     }, err => this.generalService.resolveError(err));
   }
