@@ -1,9 +1,13 @@
 <div fxLayout="column" class="zero fullScreen" fxLayoutAlign="center center">
-  <div fxFlex="33" class="one">
-    <mat-card class="auth-card">
+  <div fxFlex="50" class="one">
+    <mat-card class="auth-card zoom">
       <mat-card-header>
-        <div mat-card-avatar>
-          <i class="material-icons">account_circle</i></div>
+        <div mat-card-avatar class="pointer" (click)="file.click()">
+          <input type="file" (change)="onFileChange($event)" accept="image/*" #file hidden>
+          <i class="material-icons" *ngIf="!photo">account_circle</i>
+          <img src="{{photo}}" alt="" *ngIf="photo" class="avatar">
+
+        </div>
         <mat-card-title>Profile</mat-card-title>
       </mat-card-header>
       <mat-card-content>

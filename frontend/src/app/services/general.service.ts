@@ -20,6 +20,25 @@ export class GeneralService {
     return httpOptions;
   }
 
+
+  public getFileHttpOptions() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        // 'Content-Type': 'multipart/form-data; boundary=--------------------------783825057852513730137859',
+        'x-auth-token': localStorage.getItem('token')
+      }),
+    };
+    return httpOptions;
+  }
+
+  resolveError(error) {
+    if (error.error) {
+      this.openSnackBar(this.formatError(error.error), 1);
+    } else {
+      this.openSnackBar('error', 1);
+    }
+  }
+
   public formatError(error: string) {
     error = error.replace('"', '');
     error = error.replace('"', '');

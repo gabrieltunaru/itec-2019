@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ProfileService} from '../../services/profile.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -14,16 +15,42 @@ export class ProfileComponent implements OnInit {
     deliveryAddress: ''
   };
 
-  constructor(private profileService: ProfileService) {
-    this.profileService.getBuyerProfile().then(profile => this.profile = profile);
+  public photo;
+
+  constructor(private profileService: ProfileService,
+              private sanitizer: DomSanitizer,
+              private cdr: ChangeDetectorRef) {
+    this.updatePhoto();
   }
 
   ngOnInit() {
   }
 
+  log(asd) {
+    console.log(asd);
+  }
+
   onSubmit() {
-    console.log(localStorage.getItem('token'));
     this.profileService.setBuyerProfile(this.profile);
+  }
+
+  onFileChange(event) {
+    if (event.target.files && event.target.files.length > 0) {
+      const file: File = event.target.files[0];
+      this.profileService.uploadBuyerPhoto(file);
+      setTimeout(this.updatePhoto, 2000);
+    }
+  }
+
+  updatePhoto() {
+    this.profileService.getBuyerProfile().then(profile => {
+      const profile2: any = profile;
+      this.profile = profile2;
+      if (profile2.photo) {
+        this.photo = 'http://localhost:3000/api/profile/buyerPhoto/' + profile2.photo;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
 }

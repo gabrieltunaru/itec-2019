@@ -3,3 +3,23 @@
 .mat-card {
   @include mat-elevation(2);
 }
+
+.mat-input-element{
+  color:white;
+}
+.mat-input-server {
+  color:white;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.avatar {
+  width: 30px;
+  border-radius: 50px;
+}
+
+.zoom {
+  transform: scale(1.3);
+}

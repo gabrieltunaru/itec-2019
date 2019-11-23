@@ -8,5 +8,5 @@ const upload = require('../middleware/upload')
 router.post('/', auth, profileMiddleware.setBuyerProfile)
 router.get('/', auth, profileMiddleware.getBuyerProfile)
 router.post('/buyerPhoto', [auth, upload], profileMiddleware.uploadBuyerPhoto)
-router.get('/buyerPhoto/:filename',auth,profileMiddleware.getPhoto)
+router.get('/buyerPhoto/:filename',profileMiddleware.getImage)
 module.exports = router

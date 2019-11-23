@@ -1,6 +1,7 @@
 const { BuyerProfile } = require('../models/buyerProfile')
 const userModel = require('../models/user.model')
 const generalMid = require('./general')
+const fs = require('fs')
 
 module.exports = {
   setBuyerProfile: async (req, res) => {
@@ -22,26 +23,32 @@ module.exports = {
   },
 
   uploadBuyerPhoto: async (req, res, next) => {
-    const file = req.file
-    if (!file) {
-      const error = new Error('Please upload a file')
-      error.httpStatusCode = 400
-      return next(error)
+    try {
+      const file = req.file
+      if (!file) {
+        res.status(400).send("Didn't receive a file")
+      }
+      const decoded = generalMid.decoded(req.headers)
+      await userModel.User.update(
+        { _id: decoded._id },
+        { 'buyerProfile.photo': file.filename }
+      )
+      res.send(file)
+    } catch (err) {
+      res.status(400).send(err)
     }
-    const decoded = generalMid.decoded(req.headers)
-    console.log(decoded)
-    await userModel.User.update(
-      { _id: decoded._id },
-      { 'buyerProfile.photo': file.filename }
-    )
-    res.send(file)
   },
 
-  getPhoto: async (req,res) => {
-    //   const decoded = generalMid.decoded(req.headers)
-    //   const user = await userModel.User.findOne({ _id: decoded._id })
-    //     res.send(user)
-    const {filename} = req.params
+  getPhoto: async (req, res) => {
+    const { filename } = req.params
     res.send(generalMid.getFile(filename))
-    }
+  },
+
+  getImage: async (req, res) => {
+    const { filename } = req.params
+    fs.readFile(generalMid.getFile(filename), function(err, data) {
+      if (err) throw err
+      res.send(data)
+    })
+  },
 }

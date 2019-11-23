@@ -54,6 +54,13 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  getCurrentUser() {
+    return new Promise((resolve, reject) => {
+      this.http.get('/api/user', this.httpOptions)
+        .subscribe((res) => resolve(res), error => reject(error));
+    });
+  }
+
   signOut() {
     localStorage.clear();
     this.isLoggedIn = false;

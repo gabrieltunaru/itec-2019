@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'assets/themes';
+@import '~@angular/material/theming';
 
+@include angular-material-theme($candy-app-theme);
 html, body {
   height: 100%;
 }
@@ -31,4 +34,39 @@ body {
 
 .mat-tab-body-wrapper {
   height: 100%;
+}
+
+.mat-tab-label-content {
+  color: white;
+  text-shadow: 2px 2px 2px black;
+}
+
+.mat-card {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white !important;
+}
+
+.mat-form-field-empty {
+  color: white !important;
+}
+
+.mat-form-field-underline {
+  background: white !important;
+}
+
+.mat-form-field-label.mat-form-field-infix {
+  color: white;
+}
+
+.mat-focused .placeholder .mat-select-placeholder{
+  color:white;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: red;
+  opacity: 1; /* Firefox */
+}
+
+.mat-form-field-wrapper .ng-star-inserted {
+  color: white;
 }

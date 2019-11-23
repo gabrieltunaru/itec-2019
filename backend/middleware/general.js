@@ -10,7 +10,7 @@ module.exports = {
   },
 
   getFile(filename) {
-    const bitmap = fs.readFileSync(__dirname + '/../assets/images/' + filename)
-    return new Buffer(bitmap).toString('base64')
+    return __dirname + '/../assets/images/' + filename
+
   },
 }
