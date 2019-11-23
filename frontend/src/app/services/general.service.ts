@@ -1,0 +1,33 @@
+import {Injectable} from '@angular/core';
+import {HttpHeaders} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GeneralService {
+
+  constructor(private snackBar: MatSnackBar) {
+  }
+
+  public getHttpOptions() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'x-auth-token': localStorage.getItem('token')
+      }),
+    };
+    return httpOptions;
+  }
+
+  public formatError(error: string) {
+    error = error.replace('"', '');
+    error = error.replace('"', '');
+    error = error.charAt(0).toUpperCase() + error.substring(1) + '.';
+    return error;
+  }
+
+  public openSnackBar(message: string, duration: number) {
+    this.snackBar.open(message, '', {duration: duration * 1000});
+  }
+}

@@ -2,14 +2,9 @@ const config = require('config')
 const jwt = require('jsonwebtoken')
 const Joi = require('joi')
 const mongoose = require('mongoose')
+const { BuyerProfileSchema } = require('./buyerProfile')
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 50,
-  },
   email: {
     type: String,
     required: true,
@@ -25,25 +20,24 @@ const UserSchema = new mongoose.Schema({
     unique: true,
   },
   isAdmin: Boolean,
+  buyerProfile: BuyerProfileSchema,
 })
 
-UserSchema.methods.generateAuthToken = () => {
+UserSchema.methods.generateAuthToken = function() {
   const token = jwt.sign(
     {
       _id: this._id,
+      email: this.email,
       isAdmin: this.isAdmin,
     },
     config.get('privateKey')
   )
+  console.log(token)
   return token
 }
 
 function validateUser(user) {
   const schema = {
-    name: Joi.string()
-      .min(3)
-      .max(50)
-      .required(),
     email: Joi.string()
       .min(5)
       .max(255)

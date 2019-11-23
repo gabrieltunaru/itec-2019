@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-signup',
@@ -13,14 +15,22 @@ export class SignupComponent implements OnInit {
     password2: ''
   };
 
-  constructor() {
+  constructor(public authService: AuthService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
   }
 
-  register() {
-
+  onSubmit() {
+    const user = {
+      email: this.credentials.email,
+      password: this.credentials.password
+    };
+    if (this.credentials.password === this.credentials.password2) {
+      this.authService.register(user);
+    } else {
+      this.snackBar.open('Passwords do not match')
+    }
   }
 
 }

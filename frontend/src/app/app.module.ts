@@ -9,10 +9,20 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
-import {MatCardModule, MatFormFieldModule, MatInputModule, MatToolbarModule} from '@angular/material';
+import {
+  _MatMenuDirectivesModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule, MatMenuModule,
+  MatSnackBarModule, MatTabsModule,
+  MatToolbarModule
+} from '@angular/material';
 import { AuthComponent } from './pages/auth/auth.component';
 import {FormsModule} from '@angular/forms';
 import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
+import {HttpClientModule} from '@angular/common/http';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +32,8 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
     SigninComponent,
     SignupComponent,
     AuthComponent,
+    ProfileComponent,
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +46,12 @@ import {FlexLayoutModule, FlexModule} from '@angular/flex-layout';
     MatInputModule,
     FormsModule,
     FlexLayoutModule,
-    FlexModule
+    FlexModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    _MatMenuDirectivesModule,
+    MatMenuModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

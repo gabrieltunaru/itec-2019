@@ -13,7 +13,6 @@ module.exports = {
         return
       }
       user = new User({
-        name: req.body.name,
         password: req.body.password,
         email: req.body.email,
       })
@@ -23,7 +22,6 @@ module.exports = {
       const token = user.generateAuthToken()
       res.header('x-auth-token', token).send({
         _id: user._id,
-        name: user.name,
         email: user.email,
       })
     } catch (err) {
@@ -35,6 +33,11 @@ module.exports = {
   login: async (req, res) => {
     let reqUser = req.body
     let dbUser = await User.findOne({ email: req.body.email })
+    console.log(dbUser)
+    if(!dbUser) {
+        res.status(400).send("User does not exist")
+        return
+    }
     bcrypt
       .compare(reqUser.password, dbUser.password)
       .then(equal => {
@@ -43,7 +46,6 @@ module.exports = {
           const token = user.generateAuthToken()
           res.header('x-auth-token', token).send({
             _id: user._id,
-            name: user.name,
             email: user.email,
           })
         } else {
