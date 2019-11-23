@@ -30,10 +30,16 @@
           </mat-radio-group>
 
         </form>
+      </mat-card-content>
+      <mat-card-footer>
+
         <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">
           Save
         </button>
-      </mat-card-content>
+        <div>
+        <h5 *ngIf="!user.isSeller" class="text">Profile not verified</h5>
+        </div>
+      </mat-card-footer>
     </mat-card>
   </div>
 </div>

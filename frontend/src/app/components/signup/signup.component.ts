@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
     if (this.credentials.password === this.credentials.password2) {
       this.authService.register(user);
     } else {
-      this.snackBar.open('Passwords do not match')
+      this.snackBar.open('Passwords do not match');
     }
   }
 

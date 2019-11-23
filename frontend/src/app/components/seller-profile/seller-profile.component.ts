@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ProfileService} from '../../services/profile.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-seller-profile',
@@ -19,11 +20,14 @@ export class SellerProfileComponent implements OnInit {
   public checked;
 
   public photo;
+  public user;
 
   constructor(private profileService: ProfileService,
               private sanitizer: DomSanitizer,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private authService: AuthService) {
     this.updatePhoto();
+    authService.getCurrentUser().then(user => this.user = user);
   }
 
   ngOnInit() {

@@ -19,10 +19,10 @@ const UserSchema = new mongoose.Schema({
     maxlength: 255,
     unique: true,
   },
-  isAdmin: Boolean,
+  isAdmin: { type: Boolean, default: false },
   buyerProfile: BuyerProfileSchema,
   sellerProfile: BuyerProfileSchema,
-  isSeller: Boolean
+  isSeller: { type: Boolean, default: false },
 })
 
 UserSchema.methods.generateAuthToken = function() {

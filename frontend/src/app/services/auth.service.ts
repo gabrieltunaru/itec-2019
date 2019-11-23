@@ -19,13 +19,13 @@ export class AuthService {
 
 
   register(user) {
-    this.http.post('/api/user/register', user, this.generalService.getHttpOptions())
+    this.http.post('/api/user/register', user)
       .subscribe(res => {
           this.storeToken(res);
           this.isLoggedIn = true;
         },
         error => {
-          this.snackBar.open(this.generalService.formatError(error.error));
+          this.generalService.resolveError(error);
         });
   }
 

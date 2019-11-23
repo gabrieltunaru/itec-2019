@@ -1,11 +1,13 @@
 const { BuyerProfile } = require('../models/buyerProfile')
 const userModel = require('../models/user.model')
 const generalMid = require('./general')
+const { SellersToVerify } = require('../models/sellersToVerify')
 const fs = require('fs')
 
 const setProfile = type => async (req, res) => {
   const profile = new BuyerProfile({ ...req.body })
   const decoded = generalMid.decoded(req.headers)
+  checkVerifiedSeller(decoded)
   const modelName = `${type}Profile`
   await userModel.User.update({ _id: decoded._id }, { [modelName]: profile })
   userModel.User.findOne({ email: decoded.email }).exec((err, result) => {
@@ -16,6 +18,18 @@ const setProfile = type => async (req, res) => {
 
 const setBuyerProfile = setProfile('buyer')
 const setSellerProfile = setProfile('seller')
+
+async function checkVerifiedSeller(user) {
+  if (!user.isSeller) {
+    const exists = await SellersToVerify.findOne({ email: user.email })
+    const isOnList = await SellersToVerify.findOne({ sellerId: user._id })
+    if (isOnList || exists) {
+      return
+    }
+    const sellerToVerify = new SellersToVerify({ sellerId: user._id })
+    await sellerToVerify.save()
+  }
+}
 
 const getProfile = type => async (req, res) => {
   const modelName = `${type}Profile`
@@ -31,7 +45,7 @@ const getSellerProfile = getProfile('seller')
 
 const uploadPhoto = type => async (req, res, next) => {
   try {
-  const modelName = `${type}Profile.photo`
+    const modelName = `${type}Profile.photo`
     const file = req.file
     if (!file) {
       res.status(400).send("Didn't receive a file")
@@ -66,5 +80,5 @@ module.exports = {
   uploadBuyerPhoto,
   setSellerProfile,
   getSellerProfile,
-  uploadSellerPhoto
+  uploadSellerPhoto,
 }

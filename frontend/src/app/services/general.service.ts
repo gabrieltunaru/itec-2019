@@ -19,10 +19,8 @@ export class GeneralService {
     return httpOptions;
   }
 
-
-
   resolveError(error) {
-    if (error.error) {
+    if (error && error.error) {
       this.openSnackBar(this.formatError(error.error), 1);
     } else {
       this.openSnackBar('error', 1);
