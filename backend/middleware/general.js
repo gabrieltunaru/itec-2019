@@ -11,6 +11,18 @@ module.exports = {
 
   getFile(filename) {
     return __dirname + '/../assets/images/' + filename
+  },
 
+  addOne(schema) {
+    return async (req, res) => {
+      try {
+          console.log(req.body)
+        const model = new schema(req.body)
+        await model.save()
+        res.sendStatus(201)
+      } catch (err) {
+        res.status(400).send(err)
+      }
+    }
   },
 }
