@@ -1,6 +1,8 @@
 const { Item } = require('../models/item')
 const generalMid = require('./general')
 const fs = require('fs')
+const ObjectId = require('mongoose').Types.ObjectId; 
+const { Category } = require('../models/category')
 
 const setItem = async (req, res) => {
   try {
@@ -12,27 +14,25 @@ const setItem = async (req, res) => {
   }
 }
 
-
-async function checkVerifiedSeller(user) {
-  if (!user.isSeller) {
-    const exists = await SellersToVerify.findOne({ email: user.email })
-    const isOnList = await SellersToVerify.findOne({ sellerId: user._id })
-    if (isOnList || exists) {
-      return
-    }
-    const sellerToVerify = new SellersToVerify({ sellerId: user._id })
-    await sellerToVerify.save()
+const getOwnerItems = async (req, res) => {
+  try {
+    const id = req.params.id
+    res.json(await Item.find({owner: id}))
+  } catch(err) {
+      res.status(400).send(err.message)
   }
 }
 
-const getProfile = type => async (req, res) => {
-  const modelName = `${type}Profile`
-  const decoded = generalMid.decoded(req.headers)
-  userModel.User.findOne({ _id: decoded._id }).exec((err, result) => {
-    res.send(result[modelName])
-    return
-  })
+const getItemsByCategory = async (req,res) => {
+  try {
+    const id = req.params.id
+    const category = await Category.findById(id).exec()
+    const categories =[category._id,...category.childrens]
+    console.log(categories)
+    res.json(await Item.find({category: {$in: categories}}))
+  } catch(err) {
+      res.status(400).send(err.message)
+  }
 }
 
-
-module.exports = {setItem}
+module.exports = { setItem ,getOwnerItems, getItemsByCategory}

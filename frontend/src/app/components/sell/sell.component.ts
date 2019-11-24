@@ -28,8 +28,12 @@ export class SellComponent implements OnInit {
     rest.getAll('/category/sub').subscribe(categories => {
       this.categories = categories;
     });
-    // @ts-ignore
-    auth.getCurrentUser().then(user => this.item.owner = user._id);
+    auth.getCurrentUser().then(user => {
+      // @ts-ignore
+      this.item.owner = user._id;
+      // @ts-ignore
+      rest.getAll('/items/ownerId=' + user._id).subscribe(items => console.log(items));
+    });
   }
 
   ngOnInit() {
@@ -50,7 +54,7 @@ export class SellComponent implements OnInit {
   }
 
   onSubmit() {
-    this.rest.addOne('/item', this.item).subscribe(res =>
+    this.rest.addOne('/items', this.item).subscribe(res =>
         this.general.openSnackBar('Success', 1),
       error => this.general.resolveError(error)
     );
