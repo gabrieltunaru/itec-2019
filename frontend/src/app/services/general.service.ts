@@ -37,4 +37,5 @@ export class GeneralService {
   public openSnackBar(message: string, duration: number) {
     this.snackBar.open(message, '', {duration: duration * 1000});
   }
+
 }

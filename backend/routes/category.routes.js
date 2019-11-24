@@ -5,5 +5,6 @@ const router = express.Router()
 
 router.post('/',  categoryMid.addOne)
 router.get('/',  categoryMid.getAll)
+router.get('/sub',  categoryMid.getSubcategories)
 
 module.exports = router

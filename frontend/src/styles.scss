@@ -70,3 +70,14 @@ body {
 .mat-form-field-wrapper .ng-star-inserted {
   color: white;
 }
+
+.mat-select-arrow {
+  color: white !important;
+}
+
+
+.container {
+  filter: blur(200);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white !important;
+}

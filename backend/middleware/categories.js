@@ -26,6 +26,14 @@ const getAll = async (req, res) => {
   )
 }
 
+const getSubcategories = async (req, res) => {
+    res.send(
+      await Category.find({
+        parentId: { $exists: true },
+      }).populate('childrens')
+    )
+  }
+
 async function addChildren(parentId, childId) {
   const parent = await Category.findById(parentId).exec()
   await parent.update({
@@ -37,4 +45,4 @@ async function addChildren(parentId, childId) {
   }
 }
 
-module.exports = { addOne, getAll }
+module.exports = { addOne, getAll, getSubcategories }

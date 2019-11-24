@@ -6,6 +6,8 @@ const usersRoute = require('./routes/users.route')
 const cors = require('cors')
 const profilesRoute = require('./routes/profile.routes')
 const categoryRoutes = require('./routes/category.routes')
+const itemRoutes = require('./routes/item.routes')
+const generalRoutes = require('./routes/generic.routes')
 app.use(cors())
 
 if (!config.get('privateKey')) {
@@ -24,5 +26,7 @@ app.use(express.json())
 app.use('/api/user', usersRoute)
 app.use('/api/profile', profilesRoute)
 app.use('/api/category', categoryRoutes)
+app.use('/api/item', itemRoutes)
+app.use('/api/general',generalRoutes)
 
 app.listen(3000, () => console.log(`Listening on port 3000`))

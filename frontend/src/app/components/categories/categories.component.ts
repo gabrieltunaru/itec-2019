@@ -11,7 +11,7 @@ export class CategoriesComponent implements OnInit {
   public categories;
 
   constructor(private rest: RestService) {
-    rest.getAll('/category/roots').subscribe(categories => {
+    rest.getAll('/category').subscribe(categories => {
       this.categories = categories;
       console.log(categories);
     });

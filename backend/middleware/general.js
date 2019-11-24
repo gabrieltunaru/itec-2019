@@ -25,4 +25,12 @@ module.exports = {
       }
     }
   },
+
+  getImage: async (req, res) => {
+    const { filename } = req.params
+    fs.readFile(generalMid.getFile(filename), function(err, data) {
+      if (err) throw err
+      res.send(data)
+    })
+  }
 }
