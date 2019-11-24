@@ -18,18 +18,20 @@ const addOne = async (req, res) => {
   }
 }
 
-const getAll = async(req,res) => {
-
-    res.send(await Category.find())
+const getAll = async (req, res) => {
+  res.send(
+    await Category.find({
+      parentId: { $exists: false },
+    }).populate('childrens')
+  )
 }
 
 async function addChildren(parentId, childId) {
-  const parent = await Category.findById(parentId ).exec()
+  const parent = await Category.findById(parentId).exec()
   await parent.update({
     children: parent.childrens.push(childId),
   })
   await parent.save()
-  console.log(parent.childrens)
   if (parent.parentId) {
     await addChildren(parent.parentId, childId)
   }

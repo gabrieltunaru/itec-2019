@@ -8,13 +8,10 @@ const CategotySchema = new mongoose.Schema({
     parentId: {
       type: String,
     },
-    ancestors: {
-        type: [String]
+    childrens: {
+        type: [mongoose.Schema.ObjectId],
+        ref: 'CategotySchema'
     },
-    ancestorsIds: {
-        type: [String]
-    },
-    childrens: [String]
 })
 
 const Category = mongoose.model('Category', CategotySchema)
